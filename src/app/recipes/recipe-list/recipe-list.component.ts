@@ -1,5 +1,6 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { Recipe } from '../recipe.model';
+import { RecipeService } from '../recipe.service';
 @Component({
   selector: 'app-recipe-list',
   templateUrl: './recipe-list.component.html',
@@ -7,38 +8,28 @@ import { Recipe } from '../recipe.model';
 })
 export class RecipeListComponent implements OnInit {
 
-  @Output() recipeWasSelected = new EventEmitter<Recipe>();
+  //@Output() recipeWasSelected = new EventEmitter<Recipe>();
 
 
 
-  recipes: Recipe[] = [
-
-    new Recipe('Pizza',
-     'Very much testy',
-      'https://thumbs.dreamstime.com/z/various-spices-recipe-word-vintage-background-copyspace-selective-focus-food-baking-cooking-concept-97076702.jpg')
-    ,
-      new Recipe('Burger',
-      'Very much testy',
-       'https://thumbs.dreamstime.com/z/various-spices-recipe-word-vintage-background-copyspace-selective-focus-food-baking-cooking-concept-97076702.jpg'),
-       new Recipe('Sandwitch',
-     'Very much testy',
-      'https://thumbs.dreamstime.com/z/various-spices-recipe-word-vintage-background-copyspace-selective-focus-food-baking-cooking-concept-97076702.jpg'),
-      new Recipe('A testy recipe',
-     'Very much testy',
-      'https://thumbs.dreamstime.com/z/various-spices-recipe-word-vintage-background-copyspace-selective-focus-food-baking-cooking-concept-97076702.jpg')
+  recipes: Recipe[] = [];
 
 
-  ];
+  //injected recipeService in constructor
 
-  constructor() { }
+  constructor(private recipeService: RecipeService) { 
+
+  }
 
   ngOnInit(): void {
+    this.recipes = this.recipeService.getRecipes();
   }
 
-  onRecipeSelected(recipe: Recipe)
-  {
-    this.recipeWasSelected.emit(recipe);
+  // onRecipeSelected(recipe: Recipe)
+  // {
+  //   this.recipeWasSelected.emit(recipe);
 
-  }
+  // }
+
 
 }
